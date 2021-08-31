@@ -217,6 +217,8 @@ console.log(addVAT2(23));
 /////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 // CHALLENGE #1
+
+/*
 const poll = {
   question: 'What is your favourite programming language?',
   options: ['0: JavaScript', '1: Python', '2: Rust', '3:C++'],
@@ -256,9 +258,39 @@ poll.displayResults.call({ answers: [5, 2, 3] });
 poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1]});
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
-
+*/
 /*
 Test data for bonus:  
 Data 1: [5, 2, 3] 
 Data 2: [1, 5, 3, 9, 6, 1] 
 */
+
+
+/*
+// IIFE
+
+(function () {
+   console.log('This will never run again!');
+})();
+
+   
+(() => console.log('This will ALSO never run again!'))(); 
+
+*/
+
+const secureBooking = function () {
+   let passengerCount = 0;
+   return function () {
+      passengerCount++;
+      console.log(`${passengerCount} passengers`); 
+   }
+}
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+booker();
+
+console.dir(booker);
