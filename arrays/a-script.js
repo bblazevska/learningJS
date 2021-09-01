@@ -4,15 +4,25 @@
 /////////////////////////////////////////////////
 // LECTURES
 
+//Map
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
+currencies.forEach(function (value,key,map) {
+  console.log(`${key}: ${value}`);
+});
 
+//Set
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function (value, _, map) { 
+  console.log(`${value}: ${value}`); // In sets the key and value are the same
+});
 
-
+/*
 //  forEach method
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -34,7 +44,7 @@ movements.forEach(function(mov,i,arr){
     console.log(`Movement ${i+1}: You withdreww ${Math.abs(mov)}`);
   }
 });
-
+*/
 /*
 // ARRAY METHODS
 let arr = ['a', 'b', 'c', 'd', 'e'];
