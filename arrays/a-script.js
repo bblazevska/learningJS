@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
-
+/*
 //Map
 const currencies = new Map([
   ['USD', 'United States dollar'],
@@ -21,6 +21,7 @@ console.log(currenciesUnique);
 currenciesUnique.forEach(function (value, _, map) { 
   console.log(`${value}: ${value}`); // In sets the key and value are the same
 });
+*/
 
 /*
 //  forEach method
@@ -83,4 +84,31 @@ console.log([...arr, ...arr2]);
 console.log(letters.join(' - '));
 console.log(letters.join(' '));
 */
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+///////////// CHALLENGES /////////////////////////
+
+// CHALLENGE #1
+
+const dogsJulia = [3, 5, 2, 12, 7];
+const dogsKate = [4, 1, 15, 8, 3];
+
+const dogsJulia1 = [9, 16, 6, 8, 3];
+const dogsKate1 = [10, 5, 6, 1, 4];
+
+const checkDogs = function (dogsJ, dogsK) {
+  const correctDogsJ = dogsJ.slice(1, -2);
+  const dogs = correctDogsJ.concat(dogsK);
+
+  dogs.forEach((years,i) => {
+    years>=3? console.log(`Dog number ${i+1} is an adult, and is ${years} years old.`) : console.log(`Dog number ${i+1} is still a puppy 🐶`);
+  });
+
+}
+
+checkDogs(dogsJulia, dogsKate);
+console.log('----------------------');
+checkDogs(dogsJulia1, dogsKate1);
+
 
