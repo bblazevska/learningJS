@@ -4,6 +4,20 @@
 /////////////////////////////////////////////////
 // LECTURES
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/*
+const eurToUsd = 1.1;
+// Chaining methods
+
+//Pipeline
+const totalDepositsUsd = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUsd);
+*/
+
+/*
 //the REDUCE method
 
 console.log(movements);
@@ -16,6 +30,7 @@ console.log(balance);
 //Macimum value
 const max = movements.reduce((acc, mov) => acc > mov ? acc : mov, movements[0]);
 console.log(max);
+*/
 
 /*
 // the FILTER method
@@ -157,3 +172,28 @@ checkDogs(dogsJulia, dogsKate);
 console.log('----------------------');
 checkDogs(dogsJulia1, dogsKate1);
 */
+
+// CHALLENGE #2
+
+/*
+const calcAverageHumanAge = function (dogAges) {
+  const dogHumanAges = dogAges.map((age) => age <= 2 ? 2 * age : 16 + age * 4);
+  const adults = dogHumanAges.filter(age => age >18);
+  console.log(adults);
+
+  // return adults.reduce((acc, age) => acc + age, 0) / adults.length;
+  return adults.reduce((acc, age,i,arr) => acc + (age / arr.length), 0);
+}*/
+
+// CHALLENGE #3
+
+const calcAverageHumanAge = dogAges =>
+  dogAges
+    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age > 18)
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
+const avg = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log(avg, avg2);
