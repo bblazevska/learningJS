@@ -130,7 +130,7 @@ const updateUI = function (account) {
   calcDisplayBalance(account);
   //Display summary
   calcDisplaySummary(account);
-}
+};
 // const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 // console.log(account);
 
@@ -176,8 +176,20 @@ btnTransfer.addEventListener('click', function (e) {
   ) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
-    updateUI(currentAccount)
+    updateUI(currentAccount);
   }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
 });
 
 btnClose.addEventListener('click', function (e) {
@@ -187,8 +199,10 @@ btnClose.addEventListener('click', function (e) {
     inputCloseUsername.value === currentAccount.username &&
     Number(inputClosePin.value) === currentAccount.pin
   ) {
-    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
-    
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+
     console.log(index);
 
     // delete account
@@ -196,7 +210,25 @@ btnClose.addEventListener('click', function (e) {
 
     //Hide UI
     containerApp.style.opacity = 0;
-
   }
   inputCloseUsername.value = inputClosePin.value = '';
 });
+
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
+
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+const overallBalance2= accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance2);
+ 

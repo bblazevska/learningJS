@@ -5,6 +5,35 @@
 // LECTURES
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+
+
+ 
+/*
+console.log(movements);
+console.log(movements.includes(-130));
+
+// SOME METHOD
+const anyDeposits = movements.some(mov => mov > 1500);
+console.log(anyDeposits);
+
+//EVERY METHOD
+console.log(movements.every(mov => mov>0));
+// console.log(account4.movements.every(mov => mov > 0));
+
+//seperate callback
+
+const deposit = mov => mov > 0;
+
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+*/
+
 /*
 //the FIND method
 
@@ -194,7 +223,7 @@ const calcAverageHumanAge = function (dogAges) {
 }*/
 
 // CHALLENGE #3
-
+/*
 const calcAverageHumanAge = dogAges =>
   dogAges
     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
@@ -205,3 +234,4 @@ const avg = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
 console.log(avg, avg2);
+*/
