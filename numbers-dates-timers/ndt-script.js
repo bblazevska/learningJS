@@ -97,6 +97,7 @@ console.log((2.345).toFixed(2));
 console.log(+(2.345).toFixed(2));
 */
 
+/*
 // Remainder operator %
 
 console.log(5 % 2);
@@ -114,6 +115,39 @@ console.log(isEven(6));
 console.log(isEven(9));
 console.log(isEven(23));
 console.log(isEven(514));
+*/
 
+// BigInt
 
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1);
+console.log(2 ** 53 + 2);
+console.log(2 ** 53 + 3);
+console.log(2 ** 53 + 4);
 
+console.log(6546456551564878745141564515214546416541n);
+console.log(BigInt(654645655156487));
+
+//Operations
+
+console.log(10000n + 10000n);
+console.log(4587854154157454521468n * 1000000n);
+
+const huge = 2028645854755414856n;
+const num = 23;
+
+console.log(huge * BigInt(num));
+
+//Exceprions
+console.log(20n > 15);
+console.log(20n === 20);
+console.log(typeof 20n);
+console.log(20n == '20');
+
+console.log(huge + 'is REALLY big!!');
+
+//Devisions
+
+console.log(12n / 3n);
+console.log(10 / 3);
