@@ -345,3 +345,13 @@ console.log(convertTitleCase('this is a nice title'));
 console.log(convertTitleCase('this is a LONG title but not too long'));
 console.log(convertTitleCase('and here is another title with an EXAMPLE'));
 */
+/*
+// The reminder operator
+labelBalance.addEventListener('click', () => {
+  
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+    if(i%3 ===0) row.style.backgroundColor = 'blue';
+  })
+});
+*/

@@ -4,6 +4,7 @@
 /////////////////////////////////////////////////
 // NUMBERS, DATA AND TIMERS LECTURES
 
+/*
 console.log(23 === 23.0);
 
 //Base 10 - 0 to 9 ,  1/10 = 0.1  3/10 = 3.333333
@@ -94,3 +95,25 @@ console.log((2.7).toFixed(0));
 console.log((2.7).toFixed(3));
 console.log((2.345).toFixed(2));
 console.log(+(2.345).toFixed(2));
+*/
+
+// Remainder operator %
+
+console.log(5 % 2);
+console.log(5 / 2); // 5 = 2 * 2 + 1 -> 1 is the remainder
+
+console.log(8 % 3);
+console.log(8 / 3); // 8 = 2 * 3 + 2
+
+console.log(7 % 2); // even number, the remainder is 0
+console.log(6 / 2);
+
+const isEven = n => n % 2 === 0;
+
+console.log(isEven(6));
+console.log(isEven(9));
+console.log(isEven(23));
+console.log(isEven(514));
+
+
+
