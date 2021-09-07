@@ -192,7 +192,6 @@ const account1 = {
 // console.log(new Date(0));
 // console.log(new Date(3 * 24 * 60 * 60 * 1000));
 
-
 //Working with dates
 /*
 const future = new Date(2037, 10, 19, 15, 23);
@@ -228,6 +227,7 @@ console.log(days1);
 */
 
 // Internationalizing Numbers
+/*
 const num = 3884764.23;
 
 const options = {
@@ -244,4 +244,39 @@ console.log('Syria: ', new Intl.NumberFormat('ar-SY',options).format(num));
 console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language,options).format(num)
+);*/
+
+// TIMERS
+
+//SetTimeout
+const ingredients = ['olives', 'spinach'];
+setTimeout(() => console.log('Here is your pizza! 🍕'), 3000);
+
+// passing arguments to the callback function
+
+// setTimeout(
+//   (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+//   4000,
+//   'olives',
+//   'spinach'
+// );
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+  4000,
+  ...ingredients
 );
+  
+console.log('Waiting.....');
+
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+
+//SetInterval
+
+setInterval(() => {
+  const now = new Date();
+  const hour = now.getHours();
+  const min = now.getMinutes();
+  const seconds = now.getSeconds();
+  // console.log(`Time is: ${hour}:${min}:${seconds}`);
+},1000)
