@@ -106,7 +106,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
 
@@ -115,14 +115,23 @@ const formatMovementDate = function (date) {
   if (daysPassed === 0) return 'today';
   if (daysPassed === 1) return 'yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
-  
+
+  /*
   const day = `${date.getDate()}`.padStart(2, 0);
   const month = `${date.getMonth() + 1}`.padStart(2, 0);
   const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-  
+  return `${day}/${month}/${year}`; */
+  return new Intl.DateTimeFormat(locale).format(date);
 };
+
+const formatCur = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+}
+
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -134,7 +143,10 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, acc.locale);
+
+    const formatedCurrency = formatCur(mov, acc.locale, acc.currency);
+    
 
     const html = `
       <div class="movements__row">
@@ -142,7 +154,7 @@ const displayMovements = function (acc, sort = false) {
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${mov.toFixed(2)}€</div>
+        <div class="movements__value">${formatedCurrency}</div>
       </div>
     `;
 
@@ -156,7 +168,11 @@ const displayMovements = function (acc, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
+  labelBalance.textContent = formatCur(
+    acc.balance,
+    acc.locale,
+    acc.currency
+  );
 };
 // calcDisplayBalance(account1.movements);
 
@@ -164,11 +180,18 @@ const calcDisplaySummary = function (account) {
   const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+ 
+  labelSumIn.textContent = formatCur(incomes, account.locale, account.currency);
+
   const out = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  
+  labelSumOut.textContent = formatCur(
+    Math.abs(out),
+    account.locale,
+    account.currency
+  );
 
   const interest = account.movements
     .filter(mov => mov > 0)
@@ -178,7 +201,12 @@ const calcDisplaySummary = function (account) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+  
+  labelSumInterest.textContent = formatCur(
+    interest,
+    account.locale,
+    account.currency
+  );
 };
 
 // calcDisplaySummary(account1.movements)
@@ -214,6 +242,8 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
+//Experimenting API
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   currentAccount = accounts.find(
@@ -228,6 +258,7 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 100;
 
     // Create current date and time
+    /*
     const now = new Date();
     console.log(now);
     const day = `${now.getDate()}`.padStart(2, 0);
@@ -237,6 +268,22 @@ btnLogin.addEventListener('click', function (e) {
     const min = `${now.getMinutes()}`.padStart(2, 0);
 
     labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+    */
+
+    // Internationalizing DATES
+    const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    };
+    // const locale = navigator.language;
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
