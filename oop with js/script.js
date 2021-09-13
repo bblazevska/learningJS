@@ -1,7 +1,9 @@
 'use strict';
+///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+// ----------------- LECTURES ---------------------------//
 
 //Constructor function
-
 const Person = function (firstName, birthYear) {
    //Instance properties
    this.firstName = firstName;
@@ -14,9 +16,9 @@ const Person = function (firstName, birthYear) {
    }
    */
 }
-
+/*
 const jonas = new Person('Jonas', 1991);
-console.log(jonas);
+// console.log(jonas);
 
 //When we call the constructor function with the new keyword:
 // 1. New {} is created
@@ -26,7 +28,7 @@ console.log(jonas);
 
 const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1998);
-console.log(matilda, jack);
+// console.log(matilda, jack);
 
 console.log(jonas instanceof Person);
 
@@ -75,3 +77,42 @@ console.log(arr.unique());
 const h1 = document.querySelector('h1');
 
 console.dir( x=> x+1);
+*/
+
+
+
+///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+// ----------------- CHALLENGES ---------------------------//
+
+
+// CHALLENGE #1
+
+const Car = function (make, speed) {
+   this.make = make;
+   this.speed = speed;
+};
+
+Car.prototype.accelerate = function () {
+   this.speed += 10;
+   console.log(`'${this.make}' going at ${this.speed} km/h `);
+}
+
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`'${this.make}' going at ${this.speed} km/h `);
+};
+
+const car1 = new Car('BMW', 120);
+const car2 = new Car('Mercedes', 95);
+console.log(car1, car2);
+
+car1.accelerate();
+car1.accelerate();
+car1.accelerate();
+car1.brake();
+car1.accelerate();
+car2.brake();
+car2.accelerate();
+car2.accelerate();
+car2.accelerate();
