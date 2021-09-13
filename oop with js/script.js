@@ -16,6 +16,16 @@ const Person = function (firstName, birthYear) {
    }
    */
 }
+
+//STATIC method to a constructor function 
+Person.hey = function() {
+      console.log(this);
+      console.log('Hey there 👋👋');
+}
+   
+Person.hey();
+
+
 /*
 const jonas = new Person('Jonas', 1991);
 // console.log(jonas);
@@ -92,6 +102,8 @@ class PersonCl {
       this.birthYear = birthYear;
    }
 
+   //Instance methods
+
    // Methods will be added to .prototype property
    calcAge() {
       console.log(2037 - this.birthYear);
@@ -115,6 +127,12 @@ class PersonCl {
    get fullName() {
       return this._fullName;
    }
+
+   // STATIC METHOD
+   static hey() {
+      console.log(this);
+      console.log('Hey there 👋👋');
+   }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
@@ -132,6 +150,10 @@ jessica.greet()
 
 const walter = new PersonCl('Walter White', 1998);
 
+PersonCl.hey();
+jessica.hey();
+
+/*
 // GETTERS AND SETTERS
 
 // Getter and setter on object
@@ -152,7 +174,7 @@ console.log(account.latest);
 
 account.latest = 50;
 console.log(account.movements);
-
+*/
 
 
 
