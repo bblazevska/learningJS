@@ -337,29 +337,50 @@ jay.calcAge();
 // Class example
 
 class Account {
-   constructor(owner, currency, pin) {
-      this.owner = owner;
-      this.currency = currency;
-      this.pin = pin;
-      this.movements = [];
-      this.locale = navigator.language;
-   }
+  // 1. Public fields
+  locale = navigator.language;
 
-   deposit(val) {
-      this.movements.push(val);
-   }
-   withdraw(val) {  
-      this.deposit(-val);
-   }
-   approveLoan(val) {
-      return true;
-   }
-   requestLoan(val) {
-      if (this.approveLoan(val)) {
-         this.deposit(val);
-         console.log('Loan approved');
-      }
-   }
+  // 2.Private fields
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+
+    //Protected property
+    this.#pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.language;
+  }
+
+  // 3. Pubblic methods
+
+  // Public interface
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  requestLoan(val) {
+   //  if (this.#approveLoan(val)) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+    }
+  }
+
+  // 4. Private methods
+//   #approveLoan(val) {
+  _approveLoan(val) {
+    return true;
+  }
 }
 
 const acc1 = new Account('Jonas', 'EUR', 1111);
@@ -369,8 +390,14 @@ acc1.withdraw(140);
 console.log(acc1);
 
 acc1.requestLoan(500);
+
+console.log(acc1.getMovements());
+
 console.log(acc1);
 
+// console.log(acc1.#movements);
+// console.log(acc1.#pin);
+// console.log(acc1.#approveLoan(100));
 
 
 
