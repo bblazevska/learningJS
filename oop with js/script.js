@@ -151,7 +151,7 @@ jessica.greet()
 const walter = new PersonCl('Walter White', 1998);
 
 PersonCl.hey();
-jessica.hey();
+
 
 /*
 // GETTERS AND SETTERS
@@ -176,9 +176,32 @@ account.latest = 50;
 console.log(account.movements);
 */
 
+// OBJECT.CREATE
 
+const PersonProto = {
+   calcAge() {
+      console.log(2037 - this.birthYear);
+   },
 
+   init(firstname, birthYear) {
+      this.firstname = firstname;
+      this.birthYear = birthYear;
+   },
+};
 
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'Steven';
+steven.birthYear = 2020;
+steven.calcAge();
+
+console.log(steven.__proto__);
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 2006);
+sarah.calcAge();
+console.log(sarah);
 ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 // ----------------- CHALLENGES ---------------------------//
