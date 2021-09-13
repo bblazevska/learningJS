@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 // ----------------- LECTURES ---------------------------//
-
+/*
 //Constructor function
 const Person = function (firstName, birthYear) {
    //Instance properties
@@ -10,21 +10,20 @@ const Person = function (firstName, birthYear) {
    this.birthYear = birthYear;
 
    //Never do this
-   /*
-   this.calcAge = function () {
-      console.log(2037 - this.birthYear);
-   }
-   */
+   
+   //this.calcAge = function () {
+   //   console.log(2037 - this.birthYear);
+   //}
+   
 }
 
 //STATIC method to a constructor function 
 Person.hey = function() {
-      console.log(this);
       console.log('Hey there 👋👋');
 }
    
-Person.hey();
-
+// Person.hey();
+*/
 
 /*
 const jonas = new Person('Jonas', 1991);
@@ -91,7 +90,7 @@ console.dir( x=> x+1);
 
 ////////////////////////////////////////////////////
 // ES6 CLASSES
-
+/*
 //class expression
 // const PersonCl = class {}
 
@@ -151,7 +150,7 @@ jessica.greet()
 const walter = new PersonCl('Walter White', 1998);
 
 PersonCl.hey();
-
+*/
 
 /*
 // GETTERS AND SETTERS
@@ -177,7 +176,7 @@ console.log(account.movements);
 */
 
 // OBJECT.CREATE
-
+/*
 const PersonProto = {
    calcAge() {
       console.log(2037 - this.birthYear);
@@ -202,6 +201,60 @@ const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 2006);
 sarah.calcAge();
 console.log(sarah);
+*/
+
+/////////////////////////////////////////////////////////////
+// Inheritance between classes: Constructor functions
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+   console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+   Person.call(this,firstName, birthYear);
+   this.course = course;
+};
+
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+   console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+console.log(mike instanceof Object);
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 // ----------------- CHALLENGES ---------------------------//
@@ -241,7 +294,7 @@ car2.accelerate();
 
 
 // CHALLENGE #2
-
+/*
 class CarCl {
    constructor(make, speed){
       this.make = make;
@@ -277,3 +330,4 @@ ford.brake();
 
 ford.speedUS = 50;
 console.log(ford);
+*/
