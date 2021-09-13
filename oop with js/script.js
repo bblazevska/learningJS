@@ -205,7 +205,7 @@ console.log(sarah);
 
 /////////////////////////////////////////////////////////////
 // Inheritance between classes: Constructor functions
-
+/*
 const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -240,11 +240,64 @@ console.log(mike instanceof Object);
 
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor)
+*/
 
+/////////////////////////////////////////////////////////////
+// Inheritance between classes: ES6 Classes
 
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
 
+  greet() {
+    console.log(`Hey ${this.fullName}!`);
+  }
 
+  get age() {
+    return 2037 - this.birthYear;
+   }
+   
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
 
+  get fullName() {
+    return this._fullName;
+  }
+
+  static hey() {
+    console.log('Hey there 👋👋');
+  }
+}
+
+class StudentCl extends PersonCl {
+   constructor(fullName, birthYear, course) {
+      //Allways needs to happen first
+      super(fullName, birthYear);
+      this.course = course;
+   }
+
+   introduce() {
+      console.log(`My name is ${this.fullName} and I study ${this.course}`);
+   }
+
+   calcAge() {
+      console.log(`I'm ${2037 - this.birthYear} years old bur as a student i feel like ${2037 - this.birthYear + 10}.`);
+   }
+}
+
+// const martha = new StudentCl('Martha Jones', 2012);
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+console.log(martha);
+
+martha.introduce();
+martha.calcAge();
 
 
 
@@ -334,7 +387,7 @@ console.log(ford);
 
 
 // CHALLENGE #3
-
+/*
 const Car = function (make, speed) {
   this.make = make;
   this.speed = speed;
@@ -375,3 +428,4 @@ tesla.brake();
 
 console.log(tesla.chargeBattery(90));
 tesla.accelerate();
+*/
