@@ -194,10 +194,59 @@ const getCountryData = function (country) {
     });
 };
 
-btn.addEventListener('click', function () {
-  getCountryData('macedonia');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('macedonia');
+// });
 // getCountryData('australia');
+
+//////////////////////////////////////////
+//Promisifying the Geolocation API
+
+
+
+
+const getPosition = function () {
+   return new Promise(function (resolve, reject) {
+      // navigator.geolocation.getCurrentPosition(
+      //   position => resolve(position),
+      //   err => reject(err)
+      // );
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+   });
+};
+
+// getPosition().then(pos => console.log(pos));
+// console.log('Getting location');
+
+const whereAmI = function () {
+   getPosition().then(pos => {
+      const { latitude : lat, longitude : lng } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+   })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding (${response.status})`);
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}!`);
+
+      return fetch(`https://restcountries.eu/rest/v2/name/${data.country}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country not found!(${response.status})`);
+      return response.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => console.error(`${err.message}`))
+    .finally((countriesContainer.style.opacity = 1));
+};
+
+btn.addEventListener('click', whereAmI);
+
+
 
 /*
 // the Event Loop in practice
@@ -211,9 +260,9 @@ Promise.resolve('Resolved promise 2').then(res => {
 console.log('Test end');
 */
 
+/*
 ////////////////////////////////////////
 // Building a promise
-
 const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Lottary draw is happening 🔮');
   setTimeout(function () {
@@ -248,7 +297,7 @@ wait(1)
     return wait(1);
   })
   .then(() => console.log('4 seconds passed'));
-
+*/
 /*
 setTimeout(() => {
   console.log('1 second passed');
@@ -263,10 +312,10 @@ setTimeout(() => {
   }, 1000);
 }, 1000);
 */
-
+/*
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
-
+*/
 
 
 
