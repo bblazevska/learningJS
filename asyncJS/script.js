@@ -202,27 +202,25 @@ const getCountryData = function (country) {
 //////////////////////////////////////////
 //Promisifying the Geolocation API
 
-
-
-
 const getPosition = function () {
-   return new Promise(function (resolve, reject) {
-      // navigator.geolocation.getCurrentPosition(
-      //   position => resolve(position),
-      //   err => reject(err)
-      // );
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-   });
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
 };
 
 // getPosition().then(pos => console.log(pos));
 // console.log('Getting location');
 
 const whereAmI = function () {
-   getPosition().then(pos => {
-      const { latitude : lat, longitude : lng } = pos.coords;
-      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-   })
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
     .then(response => {
       if (!response.ok)
         throw new Error(`Problem with geocoding (${response.status})`);
@@ -244,9 +242,7 @@ const whereAmI = function () {
     .finally((countriesContainer.style.opacity = 1));
 };
 
-btn.addEventListener('click', whereAmI);
-
-
+// btn.addEventListener('click', whereAmI);
 
 /*
 // the Event Loop in practice
@@ -275,7 +271,7 @@ const lotteryPromise = new Promise(function (resolve, reject) {
 });
 
 lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
-
+*/
 // Promisifying setTimeout
 const wait = function (seconds) {
   return new Promise(function (resolve) {
@@ -283,21 +279,21 @@ const wait = function (seconds) {
   });
 };
 
-wait(1)
-  .then(() => {
-    console.log('1 second passed');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('2 seconds passed');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('3 seconds passed');
-    return wait(1);
-  })
-  .then(() => console.log('4 seconds passed'));
-*/
+// wait(1)
+// .then(() => {
+//   console.log('1 second passed');
+//   return wait(1);
+// })
+// .then(() => {
+//   console.log('2 seconds passed');
+//   return wait(1);
+// })
+// .then(() => {
+//   console.log('3 seconds passed');
+//   return wait(1);
+// })
+// .then(() => console.log('4 seconds passed'));
+
 /*
 setTimeout(() => {
   console.log('1 second passed');
@@ -316,8 +312,6 @@ setTimeout(() => {
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
 */
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CHALLENGES
 /*
@@ -352,3 +346,44 @@ whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 */
+
+// #2
+
+// let imageEl;
+const imgContainer = document.querySelector('.images');
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+    
+    img.addEventListener('load', function () {
+      imgContainer.append(img);
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found!'))
+    });
+
+  });
+};
+
+let currentImg;
+createImage('./img/img-1.jpg')
+  .then(img => {
+    currentImg = img;
+    console.log('Image 1 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
+    return createImage('./img/img-2.jpg');
+  })
+  .then(img => {
+    currentImg = img;
+    console.log('Image 2 loaded');
+    return wait(2)
+  })
+  .then(() => currentImg.style.display = 'none')
+  .catch(err => console.error(err));
