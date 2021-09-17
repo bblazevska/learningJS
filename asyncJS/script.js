@@ -23,7 +23,7 @@ const renderCountry = function (data, className = '') {
       </div>
       </article>`;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  //   countriesContainer.style.opacity = 1;
+    countriesContainer.style.opacity = 1;
 };
 
 //////////////////////////////////////////////
@@ -202,19 +202,20 @@ const getCountryData = function (country) {
 //////////////////////////////////////////
 //Promisifying the Geolocation API
 
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    // navigator.geolocation.getCurrentPosition(
-    //   position => resolve(position),
-    //   err => reject(err)
-    // );
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   position => resolve(position),
+//     //   err => reject(err)
+//     // );
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 
 // getPosition().then(pos => console.log(pos));
 // console.log('Getting location');
 
+/*
 const whereAmI = function () {
   getPosition()
     .then(pos => {
@@ -242,7 +243,40 @@ const whereAmI = function () {
     .finally((countriesContainer.style.opacity = 1));
 };
 
-// btn.addEventListener('click', whereAmI);
+btn.addEventListener('click', whereAmI);
+*/
+
+/////////////////////////////////////////////////////////
+// ASYNC / AWAIT
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+const whereAmI = async function () {
+  //Get geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  //Reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = resGeo.json();
+  console.log(dataGeo);
+
+  //Country data
+  const res = await fetch(`https://restcountries.eu/rest/v2/name/${dataGeo.country}`);
+  const data = await res.json();
+  console.log(data);
+  renderCountry(data[0]);
+}
+whereAmI();
+console.log('FIRST');
+
+
+
+
+
 
 /*
 // the Event Loop in practice
@@ -348,8 +382,7 @@ whereAmI(19.037, 72.873);
 */
 
 // #2
-
-// let imageEl;
+/*
 const imgContainer = document.querySelector('.images');
 
 const createImage = function (imgPath) {
@@ -387,3 +420,4 @@ createImage('./img/img-1.jpg')
   })
   .then(() => currentImg.style.display = 'none')
   .catch(err => console.error(err));
+*/
